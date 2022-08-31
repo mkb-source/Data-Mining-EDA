@@ -1,0 +1,64 @@
+---
+title: "hw1"
+author: "Makenzie Barber"
+date: "2022-07-15"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+```
+
+```{r}
+#task1
+library(regclass)
+library(ggplot2)
+data("SURVEY10")
+#str(SURVEY10)
+#barplot
+gender <- SURVEY10$Gender
+figure1 <- ggplot(SURVEY10, aes(x=gender)) +
+  geom_bar() + theme(plot.title = element_text(hjust = 0.5)) + theme(plot.subtitle =element_text(hjust = 0.5)) + theme(plot.caption = element_text(hjust = 0.5)) + labs(
+    title = "Gender Distribution",
+    subtitle = "2010",
+    caption = "Separation of students surveyed by their gender",
+    tag = "Figure 1",
+    x = "Gender",
+    y = "Count of Students"
+  )
+summary(gender)
+
+
+#creating vectors
+dweight <- SURVEY10$DesiredWeight
+height <- SURVEY10$Height
+female <- SURVEY10 %>%
+  filter(Gender == 
+           "Female")
+male <- SURVEY10 %>%
+  filter(Gender == "Male")
+
+
+#datacomparison
+mean(dweight)
+mean(female$DesiredWeight)
+mean(height)
+hist(SURVEY10$Height)
+mean(female$Height)
+
+##height could have been mis-entered for height, compromising data integrity for that variable
+
+#subsets
+FSub <- subset(female, female$TxtPerDay <= 150 & female$GPA >= 3.0 & female$MinPerDayFaceBook <= 5, select = c("TxtPerDay", "GPA", "MinPerDayFaceBook"))
+
+MSub <- subset(male, male$TxtPerDay <= 150 & male$GPA >=3.0 & male$MinPerDayFaceBook >= 70, select = c("TxtPerDay","GPA","MinPerDayFaceBook"))
+
+#working with subsetting
+
+plot(FSub$GPA, bty="l", type="l",col="brown",)
+title(main = "GPA by Gender",
+      sub="Count of Students, Blue = Male, Brown = Female",
+      xlab = "####")
+lines(MSub$GPA, col= "darkblue")
+```
